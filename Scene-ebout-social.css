@@ -1,0 +1,177 @@
+.scene-ebout-social{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.features-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 60px auto 0 auto;
+  padding: 48px 24px;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 5vw;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+.features-title {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -1px;
+  -webkit-text-stroke: 1px #fff;
+  margin-bottom: 10px;
+}
+.features-title-accent {
+  color: #a000e5;
+  -webkit-text-stroke: 1px #290144;
+}
+.features-subtitle {
+  color: #b8b8b8;
+  font-size: 1.3rem;
+  margin: 0 auto;
+  max-width: 650px;
+}
+
+
+/* --- Адаптивність --- */
+@media (max-width: 1050px) {
+  .features-list {
+    gap: 16px;
+  }
+  .feature-card {
+    width: 90vw;
+    max-width: 350px;
+    min-height: 300px;
+    padding: 26px 14px 20px 14px;
+  }
+  .features-section {
+    padding: 38px 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  .features-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .feature-card {
+    width: 96vw;
+    max-width: 400px;
+    min-height: 220px;
+    padding: 18px 6vw;
+  }
+  .features-title {
+    font-size: 2rem;
+  }
+  .features-subtitle {
+    font-size: 1rem;
+  }
+}
+
+
+.features-cards-row {
+  width: 90vw;            /* Відносно ширини екрану */
+  max-width: 1350px;      /* Щоб не “розповзалося” на дуже великих моніторах */
+  height: auto;
+  display: flex;
+  gap: 2vw;               /* Гнучкий відступ між картками */
+  justify-content: center;
+}
+
+.features-card {
+  width: 28vw;               /* Залежить від ширини екрану */
+  max-width: 420px;          /* Межі для великих екранів */
+  min-width: 240px;          /* Межі для малих екранів */
+  aspect-ratio: 1.5 / 1;     /* Автоматична висота від ширини */
+  position: relative;
+}
+.features-card-bg {
+  border-radius: 1.3vw;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 0, 22, 1) 0%,
+    rgba(24, 1, 49, 1) 58%,
+    rgba(39, 0, 89, 1) 100%
+  );
+}
+
+.features-card-icon-wrap {
+  width: 36px;          /* 28px + 30% */
+  height: 49px;         /* 38px + 30% */
+  position: static;
+  z-index: 1;
+  position: absolute;
+  left: 21px;           /* 16px + 30% ≈ 21px */
+  top: 13px;            /* 10px + 30% ≈ 13px */
+}
+
+.features-card-icon-bar {
+  background: #340064;
+  width: 33.8px;        /* 26px + 30% = 33.8px */
+  height: 5.2px;        /* 4px + 30% = 5.2px */
+  position: absolute;
+  left: 1px;
+  top: 0px;
+  border-radius: 4px;
+  box-shadow: 0 0 1px #340064,
+    0 0 2px #340064,
+    0 0 7px #340064,
+    0 0 14px #340064,
+    0 0 23px #340064;
+}
+
+.features-card-icon {
+  width: 36.4px;        /* 28px + 30% = 36.4px */
+  height: 36.4px;
+  position: absolute;
+  left: 0px;
+  top: 13px;
+  overflow: visible;
+  aspect-ratio: 1;
+}
+
+.features-card-content {
+  width: 344.5px;       /* 265px + 30% = 344.5px */
+  height: 93.6px;       /* 72px + 30% = 93.6px */
+  position: static;
+}
+
+.features-card-title {
+  color: #bcbcbc;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 26px;      /* 20px + 30% ≈ 26px */
+  font-weight: 400;
+  position: absolute;
+  left: 21px;
+  top: 137px;           /* 105px + 30% ≈ 137px */
+  -webkit-text-stroke: 0.6px #b8b8b8;
+}
+
+.features-card-desc {
+  color: #6a6a6a;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 15px;      /* 11.5px + 30% ≈ 15px */
+  font-weight: 400;
+  position: absolute;
+  left: 23px;
+  top: 182px;           /* 140px + 30% ≈ 182px */
+  width: 292.5px;       /* 225px + 30% = 292.5px */
+}
