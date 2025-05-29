@@ -100,3 +100,77 @@ formSignup.onsubmit = function(e) {
     // Тут ти можеш зробити відправку на сервер через fetch/AJAX
   }
 }
+// Функція перевірки паролю (8+ символів, мінімум 1 літера і 3 цифри)
+function isValidPassword(password) {
+  if (password.length < 8) return false;
+  let digitCount = (password.match(/\d/g) || []).length;
+  let letterCount = (password.match(/[a-zA-Zа-яА-Я]/g) || []).length;
+  return digitCount >= 3 && letterCount >= 1;
+}
+
+// --- Toast-повідомлення ---
+function showToast(message, type = '') {
+  const toast = document.createElement('div');
+  toast.className = 'toast' + (type ? ` ${type}` : '');
+  toast.textContent = message;
+  document.getElementById('toast-container').appendChild(toast);
+  setTimeout(() => toast.remove(), 3300);
+}
+
+// --- Всі попередні твої UI/Slider/Tabs/... ---
+
+// --- Форма реєстрації ---
+formSignup.onsubmit = async e => {
+  e.preventDefault();
+
+  const fname = formSignup.fname.value.trim();
+  const lname = formSignup.lname.value.trim();
+  const email = formSignup.email.value.trim();
+  const password = formSignup.password.value;
+  const year = formSignup.year.value.trim();
+  const month = formSignup.month.value.trim();
+  const day = formSignup.day.value.trim();
+
+  // Валідація пароля
+  if (!isValidPassword(password)) {
+    showToast('Пароль має бути не менше 8 символів, містити мінімум 1 букву і 3 цифри', 'error');
+    return;
+  }
+
+  // Формуємо дані для відправки
+  const data = {
+    fname,
+    lname,
+    email,
+    password,
+    birth: {
+      year,
+      month,
+      day
+    }
+  };
+
+  // Відправляємо POST-запит на backend (заміни URL на свій при деплої!)
+  try {
+    const res = await fetch('http://localhost:3001/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+
+    if (result.success) {
+      showToast('Реєстрація успішна!', 'success');
+      // Зберігаємо айді і статус у localStorage
+      localStorage.setItem('isRegistered', 'true');
+      localStorage.setItem('userId', result.id);
+      // Можна додати ще дані для швидкого доступу:
+      // localStorage.setItem('user', JSON.stringify(result.user));
+      // Редірект/перехід, якщо треба
+    } else {
+      showToast(result.message || 'Помилка реєстрації', 'error');
+    }
+  } catch (err) {
+    showToast('Помилка з’єднання з сервером', 'error');
+  }
+};

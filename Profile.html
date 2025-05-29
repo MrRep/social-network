@@ -1,523 +1,127 @@
 <!DOCTYPE html>
 <html lang="uk">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Реєстрація / Вхід</title>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-            rel="stylesheet" />
-        <style>
-    :root {
-      --main-bg: #3b364a;
-      --card-bg: #24202f;
-      --accent: #8d79ff;
-      --input-bg: #312c40;
-      --input-border: #483d65;
-      --white: #fff;
-      --gray: #c4c4c4;
-      --radius: 20px;
-      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-    }
-    .error {
-  color: #ff9494;
-  font-size: 13px;
-  margin-top: 3px;
-  padding-left: 2px;
-  font-weight: 500;
-}
-input:invalid, input[aria-invalid="true"] {
-  border-color: #ff9494 !important;
-}
-    * { box-sizing: border-box; }
-    body {
-      background: var(--main-bg);
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      min-width: 100vw;
-      min-height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: stretch;
-      justify-content: stretch;
-    }
-    .container {
-      display: flex;
-      width: 100vw;
-      height: 100vh;
-      min-width: 100vw;
-      min-height: 100vh;
-      border-radius: 0;
-      box-shadow: none;
-      overflow: hidden;
-      background: var(--card-bg);
-    }
-    .slider-section {
-      width: 45vw;
-      min-width: 350px;
-      height: 100vh;
-      position: relative;
-      background: #222;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      overflow: hidden;
-    }
-    .slider-img {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover;
-      transition: opacity 1s;
-      z-index: 1;
-    }
-    .slider-overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(180deg,rgba(49,44,64,0.25), var(--card-bg) 85%);
-      z-index: 2;
-    }
-    .slider-content {
-      position: relative;
-      z-index: 3;
-      width: 100%;
-      padding: 40px;
-      color: var(--white);
-      text-align: left;
-      margin-bottom: 40px;
-    }
-    .slider-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .slider-desc {
-      font-size: 15px;
-      opacity: 0.88;
-    }
-    .slider-dots {
-      position: relative;
-      margin-top: 32px;
-      text-align: left;
-      z-index: 4;
-    }
-    .dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin: 0 4px;
-      background: #fff3;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .dot.active { background: var(--accent); }
-
-    .form-section {
-      width: 55vw;
-      min-width: 350px;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 60px 80px;
-      background: var(--card-bg);
-    }
-    .tabs {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 34px;
-      justify-content: flex-start;
-      align-items: center;
-    }
-    .tab {
-      font-size: 28px;
-      font-weight: 700;
-      color: #b6abe6;
-      cursor: pointer;
-      border: none;
-      background: none;
-      padding: 8px 24px 8px 24px;
-      border-radius: 15px 15px 0 0;
-      transition: 
-        color 0.25s, 
-        background 0.18s, 
-        box-shadow 0.18s;
-      position: relative;
-      top: 0;
-    }
-    .tab.active {
-      color: #fff;
-      background: var(--accent);
-      box-shadow: 0 5px 18px #8d79ff22;
-      z-index: 2;
-      text-decoration: none;
-      border-bottom: 3.5px solid #fff;
-    }
-    .tab:not(.active):hover {
-      background: #353066;
-      color: #fff;
-    }
-    .form-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 6px;
-    }
-    .form-sub {
-      font-size: 14px;
-      margin-bottom: 22px;
-      color: #bbb;
-    }
-    .form-group {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .input, .input-date {
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      color: var(--white);
-      font-size: 15px;
-      padding: 12px 14px;
-      border-radius: 9px;
-      outline: none;
-      width: 100%;
-      transition: border-color 0.18s;
-    }
-    .input:focus, .input-date:focus { border-color: var(--accent);}
-    /* Для полів дати народження */
-    .birth-group {
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-    .birth-label {
-      min-width: 120px;
-      color: #bbb;
-      font-size: 15px;
-      font-weight: 500;
-      margin-right: 4px;
-    }
-    .input-date {
-      width: 120px;
-      min-width: 80px;
-      max-width: 150px;
-      margin-right: 6px;
-      box-sizing: border-box;
-      font-size: 16px;
-      padding: 12px 16px;
-    }
-    @media (max-width: 800px) {
-      .input-date { width: 95px; }
-    }
-    @media (max-width: 500px) {
-      .birth-group { gap: 7px;}
-      .input-date { width: 74px; font-size: 14px;}
-    }
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 18px;
-      font-size: 13px;
-      color: var(--gray);
-      gap: 7px;
-    }
-    .checkbox-group input[type="checkbox"] {
-      accent-color: var(--accent);
-      width: 17px; height: 17px;
-      border-radius: 4px;
-    }
-    .terms-link {
-      color: var(--accent);
-      text-decoration: underline;
-      cursor: pointer;
-    }
-    .form-btn {
-      background: var(--accent);
-      color: var(--white);
-      font-size: 17px;
-      font-weight: 600;
-      width: 100%;
-      border: none;
-      padding: 13px 0;
-      border-radius: 9px;
-      cursor: pointer;
-      margin-bottom: 15px;
-      margin-top: 7px;
-      transition: background 0.18s;
-      box-shadow: 0 2px 12px #8d79ff25;
-    }
-    .form-btn:active { background: #6a57dd; }
-    .divider {
-      width: 100%;
-      text-align: center;
-      color: #bbb;
-      margin: 20px 0 15px 0;
-      font-size: 13px;
-      position: relative;
-    }
-    .divider:before, .divider:after {
-      content: '';
-      display: inline-block;
-      width: 35%;
-      height: 1.5px;
-      background: #302b4c;
-      margin: 0 12px;
-      vertical-align: middle;
-    }
-    .social-btns {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-    }
-    .social-btn {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #222136;
-      color: #fff;
-      border: 1.5px solid #413f54;
-      border-radius: 8px;
-      padding: 13px 0;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: border-color 0.18s, background 0.18s;
-      margin-top: 0;
-    }
-    .social-btn.google:hover { border-color: #db4437; }
-    .social-btn.github:hover { border-color: #00ffaf; }
-    .social-icon {
-      width: 22px; height: 22px;
-    }
-    .toggle-password {
-      position: absolute;
-      right: 16px;
-      top: 13px;
-      background: none;
-      border: none;
-      color: #bbb;
-      cursor: pointer;
-      font-size: 17px;
-      padding: 0;
-    }
-    @media (max-width: 1100px) {
-      .form-section { padding: 40px 18px;}
-      .slider-section { padding: 15px;}
-    }
-    @media (max-width: 900px) {
-      .container { flex-direction: column; }
-      .slider-section, .form-section {
-        width: 100vw;
-        min-width: unset;
-        height: 50vh;
-        padding: 18px 10px;
-      }
-      .form-section { justify-content: flex-start; }
-    }
-    @media (max-width: 600px) {
-      .form-title { font-size: 21px;}
-      .form-section { padding: 10px 4vw;}
-      .slider-section { padding: 4vw;}
-      .tab { font-size: 20px; padding: 7px 10px; }
-    }
-  </style>
-    </head>
-    <body>
-        <div class="container">
-            <!-- LEFT: SLIDER -->
-            <div class="slider-section">
-                <img class="slider-img"
-                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
-                    style="opacity: 1;">
-                <img class="slider-img"
-                    src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
-                    style="opacity: 0;">
-                <img class="slider-img"
-                    src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80"
-                    style="opacity: 0;">
-                <div class="slider-overlay"></div>
-                <div class="slider-content">
-                    <div class="slider-title">Фіксуючи моменти, створюючи
-                        спогади</div>
-                    <div class="slider-desc">Ваша історія починається тут.</div>
-                    <div class="slider-dots">
-                        <span class="dot active" data-index="0"></span>
-                        <span class="dot" data-index="1"></span>
-                        <span class="dot" data-index="2"></span>
-                    </div>
-                </div>
-            </div>
-            <!-- RIGHT: FORM -->
-            <div class="form-section">
-                <div class="tabs">
-                    <button class="tab active"
-                        id="tab-signup">Зареєструватися</button>
-                    <button class="tab" id="tab-signin">Увійти</button>
-                </div>
-                <form id="form-signup" autocomplete="off">
-                    <div class="form-title">Створити акаунт</div>
-                    <div class="form-sub">Вже маєте акаунт? <span
-                            id="goto-login"
-                            style="color:var(--accent);cursor:pointer;">Увійти</span></div>
-                    <div class="form-group">
-                        <input class="input" type="text" placeholder="Ім'я"
-                            required name="fname">
-                        <input class="input" type="text" placeholder="Прізвище"
-                            required name="lname">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="email"
-                            placeholder="Адреса Gmail" required name="email"
-                            pattern=".+@gmail\.com">
-                    </div>
-                    <div class="form-group" style="position:relative;">
-                        <input class="input" type="password"
-                            placeholder="Пароль" required name="password"
-                            minlength="6" id="signup-password">
-                        <button type="button" class="toggle-password"
-                            data-target="signup-password">&#128065;</button>
-                    </div>
-                    <div class="form-group birth-group">
-                        <label for="year" class="birth-label">Дата
-                            народження:</label>
-                        <input class="input-date" type="number"
-                            placeholder="Рік" min="1900" max="2024" id="year"
-                            name="year" required>
-                        <input class="input-date" type="number"
-                            placeholder="Місяць" min="1" max="12" id="month"
-                            name="month" required>
-                        <input class="input-date" type="number"
-                            placeholder="День" min="1" max="31" id="day"
-                            name="day" required>
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="terms" required>
-                        <label for="terms">Я погоджуюсь з <span
-                                class="terms-link">правилами</span></label>
-                    </div>
-                    <button class="form-btn"
-                        type="submit">Зареєструватися</button>
-                    <div class="divider">або</div>
-                    <div class="social-btns">
-                        <button type="button" class="social-btn google">
-                            <img class="social-icon"
-                                src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png"
-                                alt="Google" />Google
-                        </button>
-                        <button type="button" class="social-btn github">
-                            <img class="social-icon"
-                                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                                alt="Github" />Гітхаб
-                        </button>
-                    </div>
-                </form>
-                <form id="form-signin" style="display:none;" autocomplete="off">
-                    <div class="form-title">Увійти</div>
-                    <div class="form-sub">Немає облікового запису? <span
-                            id="goto-signup"
-                            style="color:var(--accent);cursor:pointer;">Зареєструватися</span></div>
-                    <div class="form-group">
-                        <input class="input" type="email"
-                            placeholder="Адреса Gmail" required name="email"
-                            pattern=".+@gmail\.com">
-                    </div>
-                    <div class="form-group" style="position:relative;">
-                        <input class="input" type="password"
-                            placeholder="Пароль" required name="password"
-                            id="signin-password">
-                        <button type="button" class="toggle-password"
-                            data-target="signin-password">&#128065;</button>
-                    </div>
-                    <button class="form-btn" type="submit">Увійти</button>
-                    <div class="divider">або увійдіть за допомогою</div>
-                    <div class="social-btns">
-                        <button type="button" class="social-btn google">
-                            <img class="social-icon"
-                                src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png"
-                                alt="Google" />Google
-                        </button>
-                        <button type="button" class="social-btn github">
-                            <img class="social-icon"
-                                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                                alt="Github" />Гітхаб
-                        </button>
-                    </div>
-                </form>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Реєстрація / Вхід</title>
+    <link rel="stylesheet" href="Pr-Stylles.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- LEFT: SLIDER -->
+      <div class="slider-section">
+        <img class="slider-img"
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+          style="opacity: 1;">
+        <img class="slider-img"
+          src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80"
+          style="opacity: 0;">
+        <img class="slider-img"
+          src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80"
+          style="opacity: 0;">
+        <div class="slider-overlay"></div>
+        <div class="slider-content">
+          <div class="slider-title">Фіксуючи моменти, створюючи спогади</div>
+          <div class="slider-desc">Ваша історія починається тут.</div>
+          <div class="slider-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+          </div>
         </div>
-        <script>
-    // Слайдер
-    const imgs = document.querySelectorAll('.slider-img');
-    const dots = document.querySelectorAll('.dot');
-    let sliderIdx = 0;
-    function showSlide(idx) {
-      imgs.forEach((img, i) => img.style.opacity = i === idx ? '1' : '0');
-      dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
-    }
-    function nextSlide() {
-      sliderIdx = (sliderIdx + 1) % imgs.length;
-      showSlide(sliderIdx);
-    }
-    let sliderInterval = setInterval(nextSlide, 4000);
-    dots.forEach(dot => {
-      dot.onclick = () => {
-        clearInterval(sliderInterval);
-        sliderIdx = +dot.dataset.index;
-        showSlide(sliderIdx);
-        sliderInterval = setInterval(nextSlide, 4000);
-      }
-    });
-    // Tabs
-    const tabSignup = document.getElementById('tab-signup');
-    const tabSignin = document.getElementById('tab-signin');
-    const formSignup = document.getElementById('form-signup');
-    const formSignin = document.getElementById('form-signin');
-    tabSignup.onclick = () => {
-      tabSignup.classList.add('active'); tabSignin.classList.remove('active');
-      formSignup.style.display = ''; formSignin.style.display = 'none';
-    };
-    tabSignin.onclick = () => {
-      tabSignin.classList.add('active'); tabSignup.classList.remove('active');
-      formSignin.style.display = ''; formSignup.style.display = 'none';
-    };
-    document.getElementById('goto-login').onclick = () => tabSignin.onclick();
-    document.getElementById('goto-signup').onclick = () => tabSignup.onclick();
-    // Password toggle
-    document.querySelectorAll('.toggle-password').forEach(btn => {
-      btn.onclick = () => {
-        const input = document.getElementById(btn.dataset.target);
-        input.type = input.type === "password" ? "text" : "password";
-        btn.innerHTML = input.type === "password" ? "&#128065;" : "&#128068;";
-      };
-    });
-    // Fake submit
-    formSignup.onsubmit = e => {
-      e.preventDefault();
-      alert('Реєстрація успішна! (Тут має бути реальна відправка на сервер)');
-    };
-    formSignin.onsubmit = e => {
-      e.preventDefault();
-      alert('Вхід успішний! (Тут має бути справжній логін)');
-    };
-    // Terms link
-    document.querySelectorAll('.terms-link').forEach(link => {
-      link.onclick = () => alert("Правила та умови...");
-    });
-    // Socials (fake)
-    document.querySelectorAll('.social-btn').forEach(btn => {
-      btn.onclick = () => alert("OAuth (Google/Гітхаб) поки що не підключено в цій демо-версії.");
-    });
-    // Start slider
-    showSlide(0);
-  </script>
-        <script src="Profile.js"></script>
-    </body>
+      </div>
+      <!-- RIGHT: FORM -->
+      <div class="form-section">
+        <div class="tabs">
+          <button class="tab active" id="tab-signup">Зареєструватися</button>
+          <button class="tab" id="tab-signin">Увійти</button>
+        </div>
+        <form id="form-signup" autocomplete="off">
+          <div class="form-title">Створити акаунт</div>
+          <div class="form-sub">Вже маєте акаунт? <span id="goto-login"
+              style="color:var(--accent);cursor:pointer;">Увійти</span></div>
+          <div class="form-group">
+            <input class="input" type="text" placeholder="Ім'я" required
+              name="fname">
+            <input class="input" type="text" placeholder="Прізвище" required
+              name="lname">
+          </div>
+          <div class="form-group">
+            <input class="input" type="email" placeholder="Адреса Gmail"
+              required name="email" pattern=".+@gmail\.com">
+          </div>
+          <div class="form-group" style="position:relative;">
+            <input class="input" type="password" placeholder="Пароль" required
+              name="password" minlength="6" id="signup-password">
+            <button type="button" class="toggle-password"
+              data-target="signup-password">&#128065;</button>
+          </div>
+          <div class="form-group birth-group">
+            <label for="year" class="birth-label">Дата народження:</label>
+            <input class="input-date" type="number" placeholder="Рік" min="1900"
+              max="2024" id="year" name="year" required>
+            <input class="input-date" type="number" placeholder="Місяць" min="1"
+              max="12" id="month" name="month" required>
+            <input class="input-date" type="number" placeholder="День" min="1"
+              max="31" id="day" name="day" required>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">Я погоджуюсь з <span
+                class="terms-link">правилами</span></label>
+          </div>
+          <button class="form-btn" type="submit">Зареєструватися</button>
+          <div class="divider">або</div>
+          <div class="social-btns">
+            <button type="button" class="social-btn google">
+              <img class="social-icon"
+                src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png"
+                alt="Google" />Google
+            </button>
+            <button type="button" class="social-btn github">
+              <img class="social-icon"
+                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                alt="Github" />Гітхаб
+            </button>
+          </div>
+        </form>
+        <form id="form-signin" style="display:none;" autocomplete="off">
+          <div class="form-title">Увійти</div>
+          <div class="form-sub">Немає облікового запису? <span id="goto-signup"
+              style="color:var(--accent);cursor:pointer;">Зареєструватися</span></div>
+          <div class="form-group">
+            <input class="input" type="email" placeholder="Адреса Gmail"
+              required name="email" pattern=".+@gmail\.com">
+          </div>
+          <div class="form-group" style="position:relative;">
+            <input class="input" type="password" placeholder="Пароль" required
+              name="password" id="signin-password">
+            <button type="button" class="toggle-password"
+              data-target="signin-password">&#128065;</button>
+          </div>
+          <button class="form-btn" type="submit">Увійти</button>
+          <div class="divider">або увійдіть за допомогою</div>
+          <div class="social-btns">
+            <button type="button" class="social-btn google">
+              <img class="social-icon"
+                src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png"
+                alt="Google" />Google
+            </button>
+            <button type="button" class="social-btn github">
+              <img class="social-icon"
+                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                alt="Github" />Гітхаб
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Toast notifications -->
+    <div id="toast-container"></div>
+    <script src="Pr.js"></script>
+  </body>
 </html>
