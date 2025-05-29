@@ -5,6 +5,17 @@ html, body {
     color: #fff;
     font-family: "Inter", sans-serif;
   }
+
+  a {
+    color: #fff !important;
+    text-decoration: underline;
+    transition: color 0.18s;
+  }
+  
+  a:hover,
+  a:focus {
+    color: #8d79ff !important; /* або свій колір для hover */
+  }
   
   .main-page {
     min-height: 100vh;
