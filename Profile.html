@@ -4,13 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Реєстрація / Вхід</title>
-    <link rel="stylesheet" href="Pr-Stylles.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="Pr-Stylles.css">
+
   </head>
   <body>
+    <!-- SVG icons for password toggle -->
+    <svg style="display:none">
+      <symbol id="eye" viewBox="0 0 24 24"><path fill="currentColor"
+          d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5zm0-8c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3z"></path></symbol>
+      <symbol id="eye-off" viewBox="0 0 24 24"><path fill="currentColor"
+          d="M17.94 17.94a10.44 10.44 0 0 1-5.94 1.94c-7 0-10-7-10-7a20.22 20.22 0 0 1 3.33-4.14l1.43 1.43A17.59 17.59 0 0 0 3 12s3 7 9 7a9.43 9.43 0 0 0 5.94-1.94l1.43 1.43zM21 12a19.77 19.77 0 0 0-3.35-4.16l1.43-1.43A21.89 21.89 0 0 1 23 12s-3 7-11 7a9.91 9.91 0 0 1-6.46-2.47L21 12zm-1.41-1.41-1.42-1.42A16.47 16.47 0 0 1 21 12s-3 7-9 7a10.13 10.13 0 0 1-7.34-3.16l1.41-1.41A8.39 8.39 0 0 0 12 19c5.18 0 8.43-4.72 9.59-6.38z"></path></symbol>
+    </svg>
     <div class="container">
       <!-- LEFT: SLIDER -->
       <div class="slider-section">
@@ -58,16 +65,33 @@
             <input class="input" type="password" placeholder="Пароль" required
               name="password" minlength="6" id="signup-password">
             <button type="button" class="toggle-password"
-              data-target="signup-password">&#128065;</button>
+              data-target="signup-password">
+              <svg width="20" height="20"><use href="#eye"></use></svg>
+            </button>
           </div>
           <div class="form-group birth-group">
             <label for="year" class="birth-label">Дата народження:</label>
             <input class="input-date" type="number" placeholder="Рік" min="1900"
               max="2024" id="year" name="year" required>
-            <input class="input-date" type="number" placeholder="Місяць" min="1"
-              max="12" id="month" name="month" required>
-            <input class="input-date" type="number" placeholder="День" min="1"
-              max="31" id="day" name="day" required>
+            <select class="input-date" id="month" name="month" required>
+              <option value disabled selected>Місяць</option>
+              <option value="1">Січень</option>
+              <option value="2">Лютий</option>
+              <option value="3">Березень</option>
+              <option value="4">Квітень</option>
+              <option value="5">Травень</option>
+              <option value="6">Червень</option>
+              <option value="7">Липень</option>
+              <option value="8">Серпень</option>
+              <option value="9">Вересень</option>
+              <option value="10">Жовтень</option>
+              <option value="11">Листопад</option>
+              <option value="12">Грудень</option>
+            </select>
+            <select class="input-date" id="day" name="day" required>
+              <option value disabled selected>День</option>
+              <!-- Динамічно JS додає опції -->
+            </select>
           </div>
           <div class="checkbox-group">
             <input type="checkbox" id="terms" required>
@@ -79,12 +103,12 @@
           <div class="social-btns">
             <button type="button" class="social-btn google">
               <img class="social-icon"
-                src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png"
+                src="Image/Google.svg"
                 alt="Google" />Google
             </button>
             <button type="button" class="social-btn github">
               <img class="social-icon"
-                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                src="Image/GitHub.svg"
                 alt="Github" />Гітхаб
             </button>
           </div>
@@ -101,10 +125,12 @@
             <input class="input" type="password" placeholder="Пароль" required
               name="password" id="signin-password">
             <button type="button" class="toggle-password"
-              data-target="signin-password">&#128065;</button>
+              data-target="signin-password">
+              <svg width="20" height="20"><use href="#eye"></use></svg>
+            </button>
           </div>
           <button class="form-btn" type="submit">Увійти</button>
-          <div class="divider">або увійдіть за допомогою</div>
+          <div class="divider">або</div>
           <div class="social-btns">
             <button type="button" class="social-btn google">
               <img class="social-icon"

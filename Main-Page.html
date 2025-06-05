@@ -1,499 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>User Profile | Dark UI v2</title>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/lucide-static@0.367.0/icons.css">
-        <style>
+  <head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
     :root {
       --bg: #111112;
-      --card: #18181b;
-      --panel: #232326;
-      --input: #24242a;
-      --accent: #8d79ff;
-      --gray: #b0b0b3;
+      --panel: #1a1a1c;
+      --panel-light: #232326;
+      --text: #eee;
+      --text-secondary: #aaa;
+      --accent: #232326;
       --radius: 22px;
-      --shadow: 0 4px 28px #0007;
+      --spacing: 22px;
     }
     body {
       background: var(--bg);
-      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      color: #fff;
       min-height: 100vh;
     }
-    .navbar-main {
-      width: 100vw;
-      max-width: 100vw;
-      background: var(--panel);
-      border-radius: var(--radius);
-      margin-bottom: 18px;
+    .container {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 38px;
+      height: 100vh;
+      gap: var(--spacing);
+      padding: var(--spacing);
       box-sizing: border-box;
-      gap: 14px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 10;
-      box-shadow: 0 2px 18px #0006;
     }
-    .navbar-section { display: flex; align-items: center; gap: 17px; }
-    .navbar-search {
-      background: var(--input);
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      padding: 9px 17px;
-      gap: 8px;
-      color: #ccc;
-      font-size: 18px;
-      min-width: 180px;
-    }
-    .navbar-search input {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 16px;
-      outline: none;
-      width: 120px;
-    }
-    .navbar-icon-btn {
-      background: var(--card);
-      border: none;
-      border-radius: 12px;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 24px;
-      cursor: pointer;
-      transition: background 0.14s;
-    }
-    .navbar-icon-btn:hover { background: var(--accent);}
-    .tabs-bar {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      background: var(--panel);
-      border-radius: var(--radius);
-      margin: 95px 0 26px 0;
-      padding: 0 18px;
-      box-shadow: var(--shadow);
-    }
-    .tab-btn {
-      flex: 1 1 0;
-      background: none;
-      border: none;
-      color: #bbb;
-      font-size: 18px;
-      font-weight: 600;
-      padding: 20px 0 16px 0;
-      border-bottom: 3px solid transparent;
-      cursor: pointer;
-      transition: color 0.18s, border-color 0.18s, background 0.15s;
-      border-radius: 0;
-      text-align: center;
-    }
-    .tab-btn.active {
-      color: #fff;
-      border-bottom: 3px solid var(--accent);
-      background: var(--card);
-    }
-
-    /* --- Головна card-сітка --- */
-    .profile-main-card {
-      width: 100%;
-      max-width: 1800px;
-      margin: 0 auto;
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 34px 28px 38px 28px;
-      display: grid;
-      grid-template-columns: 330px 1fr 1.4fr;
-      gap: 28px;
-      min-height: 650px;
-      margin-bottom: 48px;
-    }
-    .profile-sidebar {
+    /* Sidebar */
+    .sidebar {
+      flex: 0 0 340px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: var(--spacing);
       height: 100%;
     }
-    .sidebar-block {
+    .profile-card {
       background: var(--panel);
       border-radius: var(--radius);
-      padding: 24px 20px 16px 20px;
-      margin-bottom: 0;
+      padding: 38px 22px 28px 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 40px;
+      min-height: 390px;
+      flex-shrink: 0;
     }
-    .block-label {
-      align-self: flex-start;
-      color: var(--gray);
-      font-size: 14px;
-      margin-bottom: 8px;
-      margin-top: 4px;
-      font-weight: 400;
-      letter-spacing: 0.01em;
-    }
-    .avatar-wrapper {
-      width: 120px;
-      height: 120px;
+    .profile-avatar.large {
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
-      background: #23232e;
+      background: #2c2c30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      margin-bottom: 0;
       position: relative;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 18px #0004;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    .avatar-img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #bbb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 60px;
-      color: #fff;
-      user-select: none;
-    }
-    .edit-btn {
+    .profile-edit {
       position: absolute;
-      bottom: 4px;
-      right: 0;
-      background: var(--card);
+      right: 10px; bottom: 10px;
+      background: var(--panel-light);
       border-radius: 50%;
-      border: 2px solid var(--panel);
-      width: 34px; height: 34px;
+      padding: 13px;
+      font-size: 28px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
-      font-size: 19px;
-      cursor: pointer;
-      box-shadow: 0 2px 10px #0005;
-      z-index: 2;
-      transition: background 0.16s;
+      box-shadow: 0 2px 12px #0005;
+      transition: background 0.2s;
     }
-    .edit-btn:hover { background: var(--accent);}
-    .username {
-      background: var(--input);
-      color: #fff;
-      font-size: 20px;
-      font-weight: 600;
+    .profile-edit:hover { background: #3c3c40; }
+    .profile-label {
+      font-size: 0.98em;
+      color: var(--text-secondary);
+      align-self: flex-start;
+      margin-bottom: 6px;
+    }
+    .profile-name {
       width: 100%;
+      background: var(--panel-light);
+      border-radius: 12px;
+      padding: 14px;
       text-align: center;
-      padding: 10px 0 7px 0;
-      border-radius: 9px;
-      margin-bottom: 0;
-      border: none;
-      outline: none;
-    }
-    .userid {
-      background: var(--input);
-      color: #fff;
-      font-size: 16px;
+      font-size: 1.18em;
       font-weight: 500;
-      width: 100%;
-      padding: 9px 0 7px 0;
-      border-radius: 9px;
-      text-align: center;
+      margin-top: -8px;
     }
-    .friends-list {
+    .id-card {
+      width: 100%;
+      background: var(--panel-light);
+      border-radius: 12px;
+      padding: 13px 18px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
-      width: 100%;
+      align-items: flex-start;
+      margin-top: 10px;
+      box-sizing: border-box;
     }
-    .friend-item {
+    .id-label {
+      font-size: 0.98em;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .user-id {
+      background: none;
+      border-radius: 7px;
+      padding: 0;
+      text-align: left;
+      font-size: 1em;
+      color: #fff;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    .friends-card {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 22px;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .block-title {
+      color: var(--text-secondary);
+      font-size: 1em;
+      margin-bottom: 7px;
+    }
+    .friend {
       display: flex;
       align-items: center;
       gap: 12px;
-      background: var(--input);
-      border-radius: 12px;
-      padding: 9px 13px;
+      background: var(--panel-light);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
     }
+    .friend:last-child { margin-bottom: 0;}
     .friend-avatar {
-      background: #bbb;
-      width: 34px; height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
+      background: #2c2c30;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      color: #fff;
-      user-select: none;
+      font-size: 24px;
     }
     .friend-info {
       display: flex;
       flex-direction: column;
     }
-    .friend-name {
-      font-size: 15px;
-      color: #fff;
-      font-weight: 600;
+    .friend-name { font-size: 1em; }
+    .friend-status { font-size: 0.95em; color: var(--text-secondary);}
+    /* Main Area */
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing);
+      min-width: 0;
     }
-    .friend-status {
-      font-size: 12px;
+    .top-bar {
+      display: flex;
+      align-items: center;
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px 30px;
+      gap: 30px;
+      justify-content: flex-start;
+      position: relative;
+      min-width: 0;
+      width: 100%;
+    }
+    .search-box.short {
+      flex: 0 0 320px;
+      background: var(--panel-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      padding: 10px 18px;
+      gap: 8px;
+      font-size: 1.1em;
       color: #aaa;
+      min-width: 0;
+      max-width: 320px;
     }
-    /* --- Центр: views/reactions + post --- */
-    .center-side {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    .center-block {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 20px 20px 12px 20px;
-      min-height: 130px;
-      margin-bottom: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .center-block .block-label {
-      margin-bottom: 8px;
-    }
-    /* --- Right: make post + publications --- */
-    .right-main {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 20px 26px 28px 26px;
-      min-height: 360px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 0;
-    }
-    .make-post-block {
-      background: var(--input);
-      border-radius: 10px;
-      padding: 14px 14px 9px 14px;
-      margin-bottom: 10px;
-      box-shadow: 0 1px 9px #0003;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-    .make-post-top {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-    .make-post-avatar {
-      width: 30px; height: 30px; border-radius: 50%; background: #bbb;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; color: #fff;
-    }
-    .make-post-input {
-      background: var(--panel);
-      color: #fff;
+    .search-box.short input {
+      background: none;
       border: none;
+      color: #eee;
       outline: none;
-      border-radius: 8px;
-      font-size: 15px;
-      padding: 9px 11px;
+      font-size: 1em;
       width: 100%;
     }
-    .make-post-actions {
+    /* TOP BAR ICONS GROUPS */
+    .top-icons-group {
       display: flex;
-      gap: 10px;
+      gap: 18px;
       align-items: center;
-      margin-top: 2px;
+      background: transparent;
     }
-    .make-post-action-btn {
-      background: var(--block);
-      color: #bbb;
-      border: none;
-      border-radius: 7px;
-      padding: 5px 13px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.14s, color 0.14s;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .top-icons-group.left {
+      margin-left: 30px;
     }
-    .make-post-action-btn:hover { color: #fff; background: var(--accent);}
-    .make-post-select {
+    .top-icons-group.right {
       margin-left: auto;
-      background: var(--panel);
-      color: #fff;
+    }
+    .icon-btn {
+      background: var(--panel-light);
+      border-radius: 50%;
+      padding: 10px;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       border: none;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 13px;
+      color: #fff;
+      transition: background 0.2s;
     }
-    .publications-section {
-      margin-top: 7px;
+    .icon-btn svg {
+      display: block;
+    }
+    .icon-btn:hover { background: #333338; }
+    /* Категорії */
+    .categories {
+      display: flex;
+      gap: 18px;
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 10px 0;
+      justify-content: space-around;
+    }
+    .cat-btn {
+      background: var(--panel-light);
+      border: none;
+      color: #fff;
+      padding: 10px 28px;
+      border-radius: 10px;
+      font-size: 1.04em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cat-btn.active, .cat-btn:hover { background: #333338; }
+    /* Контент */
+    .content-area {
+      flex: 1;
+      display: flex;
+    }
+    .center-content {
       width: 100%;
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 38px 38px;
+      min-height: 320px;
+      font-size: 1.4em;
+      color: #c7c7c7;
       text-align: center;
-      color: #bbb;
-      font-size: 19px;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      min-height: 80px;
-      background: var(--input);
-      border-radius: 8px;
-      padding: 18px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-    @media (max-width: 1350px) {
-      .profile-main-card { grid-template-columns: 290px 1fr 1.2fr; }
-    }
-    @media (max-width: 1100px) {
-      .profile-main-card { grid-template-columns: 1fr; gap: 14px; }
-      .profile-sidebar, .center-side, .right-main { width: 100%; }
-      .center-side { flex-direction: row; gap: 18px; }
-    }
-    @media (max-width: 800px) {
-      .profile-main-card { padding: 16px 2vw 24px 2vw; }
-      .center-side { flex-direction: column; gap: 9px; }
-    }
-    @media (max-width: 600px) {
-      .navbar-main { padding: 9px 4px;}
-      .tabs-bar { padding: 0 3px;}
-      .profile-main-card { padding: 5px 0 15px 0; }
-      .sidebar-block, .center-block, .right-main { padding: 9px 4px 6px 7px;}
+    @media (max-width: 1200px) {
+      .container { flex-direction: column; }
+      .sidebar, .main-area { flex: none; width: 100%; }
+      .content-area { flex-direction: column; }
+      .center-content { min-height: 160px; padding: 18px; }
+      .profile-card { min-height: 220px; }
+      .profile-avatar.large { width: 120px; height: 120px; }
+      .search-box.short { flex: 1 1 180px; max-width: 100%; }
     }
   </style>
-    </head>
-    <body>
-        <!-- Top Navbar -->
-        <nav class="navbar-main">
-            <div class="navbar-section">
-                <div class="navbar-search">
-                    <i class="lucide lucide-search"></i>
-                    <input type="text" placeholder="Search">
-                </div>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="profile-card">
+          <div class="profile-avatar large">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none"
+              stroke="#fff" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="8" r="5"></circle>
+              <path d="M5 20v-2a7 7 0 1 1 14 0v2"></path>
+            </svg>
+            <span class="profile-edit" title="Edit">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M15.232 5.232l3.536 3.536M16.732 3.732a2.5 2.5 0 0 1 3.536 3.536l-12 12a2 2 0 0 1-.707.464l-4 1a1 1 0 0 1-1.263-1.263l1-4a2 2 0 0 1 .464-.707z" />
+              </svg>
+            </span>
+          </div>
+          <div class="profile-label">The name that is shown</div>
+          <div class="profile-name">User Name</div>
+        </div>
+        <div class="id-card">
+          <div class="id-label">Your user ID</div>
+          <div class="user-id">ID: 043284129840</div>
+        </div>
+        <div class="friends-card">
+          <div class="block-title">Friends online</div>
+          <div class="friend">
+            <div class="friend-avatar">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M6 20v-2a6 6 0 1 1 12 0v2"></path>
+              </svg>
             </div>
-            <div class="navbar-section">
-                <button class="navbar-icon-btn"><i
-                        class="lucide lucide-user-circle"></i></button>
-                <button class="navbar-icon-btn"><i
-                        class="lucide lucide-message-circle"></i></button>
-                <button class="navbar-icon-btn"><i
-                        class="lucide lucide-home"></i></button>
+            <div class="friend-info">
+              <span class="friend-name">User Name</span>
+              <span class="friend-status">User status</span>
             </div>
-            <div class="navbar-section">
-                <button class="navbar-icon-btn"><i
-                        class="lucide lucide-plus"></i></button>
-                <button class="navbar-icon-btn"><i
-                        class="lucide lucide-users"></i></button>
-                <button class="navbar-icon-btn"><i
-                        class="lucide lucide-message-square"></i></button>
+          </div>
+          <div class="friend">
+            <div class="friend-avatar">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M6 20v-2a6 6 0 1 1 12 0v2"></path>
+              </svg>
             </div>
+            <div class="friend-info">
+              <span class="friend-name">User Name</span>
+              <span class="friend-status">User status</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Area -->
+      <main class="main-area">
+        <!-- Top Bar -->
+        <div class="top-bar">
+          <div class="search-box short">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="#aaa" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round"><circle cx="11" cy="11"
+                r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+            <input type="text" placeholder="Search">
+          </div>
+          <div class="top-icons-group left">
+            <button class="icon-btn" title="Profile">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"><circle cx="12" cy="8"
+                  r="4"></circle><path
+                  d="M6 20v-2a6 6 0 1 1 12 0v2"></path></svg>
+            </button>
+            <button class="icon-btn" title="Messages">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"><path
+                  d="M21 15V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14l4 4V5a2 2 0 0 0-2-2z"></path></svg>
+            </button>
+            <button class="icon-btn" title="Home">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"><path
+                  d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m4-8v8m-4 0h4"></path></svg>
+            </button>
+          </div>
+          <div class="top-icons-group right">
+            <button class="icon-btn" title="Add post">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"><line x1="12" y1="5" x2="12"
+                  y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+            </button>
+            <button class="icon-btn" title="Groups">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"><circle cx="7" cy="8" r="4" /><circle
+                  cx="17" cy="8" r="4" /><path
+                  d="M5.33 17a4.67 4.67 0 0 1 9.34 0" /></svg>
+            </button>
+            <button class="icon-btn" title="Chat">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="#fff" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"><path
+                  d="M21 15V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14l4 4V5a2 2 0 0 0-2-2z" /></svg>
+            </button>
+          </div>
+        </div>
+        <!-- Categories -->
+        <nav class="categories">
+          <button class="cat-btn active"
+            data-section="publications">Publications</button>
+          <button class="cat-btn" data-section="friends">Friends</button>
+          <button class="cat-btn" data-section="messages">Messages</button>
+          <button class="cat-btn" data-section="groups">Groups</button>
+          <button class="cat-btn" data-section="settings">Settings</button>
         </nav>
-        <!-- Tabs Bar -->
-        <div class="tabs-bar">
-            <button class="tab-btn active">Publications</button>
-            <button class="tab-btn">Friends</button>
-            <button class="tab-btn">Messages</button>
-            <button class="tab-btn">Groups</button>
-            <button class="tab-btn">Settings</button>
+        <!-- Main Content Area -->
+        <div class="content-area">
+          <div class="center-content" id="center-content">
+            You don't have a post
+          </div>
         </div>
-        <!-- Main card -->
-        <div class="profile-main-card">
-            <!-- Sidebar -->
-            <aside class="profile-sidebar">
-                <div class="sidebar-block">
-                    <div class="avatar-wrapper">
-                        <div class="avatar-img"><i
-                                class="lucide lucide-user"></i></div>
-                        <button class="edit-btn" title="Edit"><i
-                                class="lucide lucide-pencil"></i></button>
-                    </div>
-                    <div class="block-label">The name that is shown</div>
-                    <div class="username">User Name</div>
-                </div>
-                <div class="sidebar-block">
-                    <div class="block-label">Your user ID</div>
-                    <div class="userid">ID: 043284129840</div>
-                </div>
-                <div class="sidebar-block">
-                    <div class="block-label">Friends online</div>
-                    <div class="friends-list">
-                        <div class="friend-item">
-                            <div class="friend-avatar"><i
-                                    class="lucide lucide-user"></i></div>
-                            <div class="friend-info">
-                                <div class="friend-name">User Name</div>
-                                <div class="friend-status">User status</div>
-                            </div>
-                        </div>
-                        <div class="friend-item">
-                            <div class="friend-avatar"><i
-                                    class="lucide lucide-user"></i></div>
-                            <div class="friend-info">
-                                <div class="friend-name">User Name</div>
-                                <div class="friend-status">User status</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            <!-- Center: views/reactions -->
-            <div class="center-side">
-                <div class="center-block">
-                    <div class="block-label">Views of the last post</div>
-                </div>
-                <div class="center-block">
-                    <div class="block-label">Reactions to posts</div>
-                </div>
-            </div>
-            <!-- Main post/publications -->
-            <div class="right-main">
-                <div class="block-label"
-                    style="font-size:16px; margin-bottom:7px;">Make new
-                    post</div>
-                <div class="make-post-block">
-                    <div class="make-post-top">
-                        <div class="make-post-avatar"><i
-                                class="lucide lucide-user"></i></div>
-                        <input class="make-post-input"
-                            placeholder="Share something...">
-                        <select class="make-post-select">
-                            <option>Public</option>
-                            <option>Friends only</option>
-                            <option>Private</option>
-                        </select>
-                    </div>
-                    <div class="make-post-actions">
-                        <button class="make-post-action-btn"><i
-                                class="lucide lucide-image"></i> Image</button>
-                        <button class="make-post-action-btn"><i
-                                class="lucide lucide-camera"></i> Video</button>
-                        <button class="make-post-action-btn"><i
-                                class="lucide lucide-bar-chart-3"></i>
-                            Roll</button>
-                    </div>
-                </div>
-                <div class="block-label"
-                    style="font-size:15px; margin:14px 0 4px 0; text-align:left;">Your
-                    Publications</div>
-                <div class="publications-section">
-                    You don't have a post
-                </div>
-            </div>
-        </div>
-        <script
-            src="https://cdn.jsdelivr.net/npm/lucide-static@0.367.0"></script>
-    </body>
+      </main>
+    </div>
+    <script>
+    const catBtns = document.querySelectorAll('.cat-btn');
+    const centerContent = document.getElementById('center-content');
+    const sections = {
+      publications: `<div>You don't have a post</div>`,
+      friends: `<div>Your friends list will appear here</div>`,
+      messages: `<div>No messages yet</div>`,
+      groups: `<div>You have not joined any groups</div>`,
+      settings: `<div>Profile settings will be here</div>`
+    };
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const section = btn.getAttribute('data-section');
+        centerContent.innerHTML = sections[section];
+      });
+    });
+  </script>
+  </body>
 </html>
